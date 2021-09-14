@@ -1,6 +1,6 @@
 (function(){
     const fs = require('fs')
-    let file = fs.readFileSync("dayTwo.txt").toString('utf-8')
+    let file = fs.readFileSync("dayOne.txt").toString('utf-8')
     let nums:string[] = file.split("\n");
 
     let num:number = 2020;
