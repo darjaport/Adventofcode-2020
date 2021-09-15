@@ -6,7 +6,7 @@
     let arr:string[]
     let total:number = 0
     let totalChar:number = 0
-    let minMaxNum:string[]
+    let minMaxNum:string[]|RegExpMatchArray|null
     let password:string
     let letter:string
 
