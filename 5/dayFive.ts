@@ -13,6 +13,7 @@
 
     let rows:number[] = [0, 127]
     let columns:number[] = [0, 7]
+    let ids:number[] = []
 
     let row:number
     let column: number
@@ -40,10 +41,24 @@
         columns = [0,7]
 
         id = row * 8 + column
+        ids.push(id)
 
         if (highestId < id) highestId = id
     }
 
-    console.log(highestId)
-    
+    let min:number = Math.min(...ids)
+    let max:number = Math.max(...ids)
+
+    ids = ids.sort(function(a, b){return a - b})
+
+    for (let i:number = 0; i < ids.length; i++) {
+        if (ids[i] !== min) {
+            console.log(min)
+            return
+        }
+        min++
+    }
 })()
+
+// Answer: 828
+// Answer: 565
