@@ -27,5 +27,6 @@
 
     console.log(passwordValidation())
     // Answer: 500
+    // Answer: 313
 
 })();
