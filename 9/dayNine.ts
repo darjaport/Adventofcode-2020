@@ -6,6 +6,7 @@
     let preamble:number = 25
     let checkNum:number
     let condition:number = 0
+    let invalidNum:number = 0
 
 
     for (let j:number = 0; j < preamble; j++) {
@@ -21,8 +22,8 @@
         }
 
         if (condition === 0) {
-            console.log(checkNum)
-            return
+            invalidNum = checkNum
+            break
         }
         condition = 0
         
@@ -30,6 +31,27 @@
         if(preamble < file.length - 1) preamble++
         else return
     }
+    
+    let numArr:number[] = []
+    let sum:number = 0
+    let iteration:number = 0
 
+    for(let i:number = iteration; i < file.length; i++) {
+        sum += parseInt(file[i])
+        
+        numArr.push(parseInt(file[i]))
+        if (sum > invalidNum) {
+            sum = 0
+            i = iteration++
+            numArr = []
+        } else if (sum === invalidNum) {
+            console.log(numArr);
+            break
+        }
+    }
+
+    sum = Math.min( ...numArr ) + Math.max( ...numArr )
+    console.log(sum);
+    
 
 })()
