@@ -16,39 +16,61 @@
         "N": 0
     }
 
-    const setSide = (num:number, instruction:String) => {
-        let index:number = sides.indexOf(direction)
+    let waypoint = {
+        "E": 10,
+        "S": 0,
+        "W": 0,
+        "N": 1
+    }
+
+    const setWaypoint = (num:number, instruction:String) => {
 
         if (num === 90) {
             if (instruction === "R") {
-                if (index < sides.length - 1) index++
-                else if (index >= sides.length - 1) index = 0
+                waypoint = {
+                    "E": waypoint["N"],
+                    "S": waypoint["E"],
+                    "W": waypoint["S"],
+                    "N": waypoint["W"],
+                }
             }
             else if (instruction === "L") {
-                if (index > 0) index--
-                else if (index <= 0) index = sides.length - 1
+                waypoint = {
+                    "E": waypoint["S"],
+                    "S": waypoint["W"],
+                    "W": waypoint["N"],
+                    "N": waypoint["E"],
+                }
             }
         }
 
         else if (num === 180) {
-            if (sides[index] === "E") index = 2
-            else if (sides[index] === "S") index = 3
-            else if (sides[index] === "W") index = 0
-            else if (sides[index] === "N") index = 1
+            waypoint = {
+                    "E": waypoint["W"],
+                    "S": waypoint["N"],
+                    "W": waypoint["E"],
+                    "N": waypoint["S"],
+            }
         }
 
         else if (num === 270) {
             if (instruction === "L") {
-                if (index < sides.length - 1) index++
-                else if (index >= sides.length - 1) index = 0
+                waypoint = {
+                    "E": waypoint["N"],
+                    "S": waypoint["E"],
+                    "W": waypoint["S"],
+                    "N": waypoint["W"],
+                }
             }
             else if (instruction === "R") {
-                if (index > 0) index--
-                else if (index <= 0) index = sides.length - 1
+                waypoint = {
+                    "E": waypoint["S"],
+                    "S": waypoint["W"],
+                    "W": waypoint["N"],
+                    "N": waypoint["E"],
+                }
             }
         }
-
-        return sides[index]
     }
 
     file.forEach((element:String )=> {
@@ -57,25 +79,28 @@
 
         switch(instruction) {
             case "F":
-                initialState[direction] += number
+                initialState["E"] = initialState["E"] + waypoint["E"] * number
+                initialState["N"] = initialState["N"] + waypoint["N"] *  number
+                initialState["S"] = initialState["S"] + waypoint["S"] * number
+                initialState["W"] = initialState["W"] + waypoint["W"] *  number
                 break
             case "N":
-                initialState["N"] += number
+                waypoint["N"] += number
                 break
             case "S":
-                initialState["S"] += number
+                waypoint["S"] += number
                 break
             case "E":
-                initialState["E"] += number
+                waypoint["E"] += number
                 break
             case "W":
-                initialState["W"] += number
+                waypoint["W"] += number
                 break
             case "R":
-                direction = setSide(number, instruction)
+                setWaypoint(number, instruction)
                 break
             case "L":
-                direction = setSide(number, instruction)
+                setWaypoint(number, instruction)
                 break
             default:
                 return
@@ -88,5 +113,5 @@
     let sum:number = x + y
     
     console.log("(" + x + ', ' + y + ')');
-    console.log('First star: ' + sum)
+    console.log('Second star: ' + sum)
 })()
