@@ -4,6 +4,7 @@
     let file = fs.readFileSync("dayEight.txt").toString('utf-8').split('\n')
 
     let acc:number = 0
+    let accNew:number = 0
     let i:number = 0
     interface Instructions {
         [key: number]: number
@@ -13,9 +14,6 @@
     while (i < file.length) {
         let num:number = parseInt(file[i].match(/-?\d+/)[0])
         let char:String = file[i].substring(0, 3)
-
-        if(instructions[i]) break
-        else instructions[i] = i
         
         switch(char) {
             case "acc":
@@ -23,13 +21,39 @@
                 i++
                 break
             case "jmp":
-                i += num
+                if (!instructions[i]) {
+                    instructions[i] = acc
+                    i+=num
+                } else if (instructions[i] && instructions[i] !== -1) {
+                    accNew = acc = instructions[i]
+                    instructions[i] = -1
+                    i++
+                } else if (instructions[i] && instructions[i] === -1) {
+                    i += num
+                    acc = accNew
+                }
+                else {
+                    i += num
+                }
                 break
             case "nop":
-                i++
+                if (!instructions[i]) {
+                    instructions[i] = acc
+                    i++
+                } else if (instructions[i] && instructions[i] !== -1) {
+                    accNew = acc = instructions[i]
+                    instructions[i] = -1
+                    i+=num
+                } else if (instructions[i] && instructions[i] === -1) {
+                    i++
+                    acc = accNew
+                }
+                else {
+                    i++
+                }
                 break
         }
     }
-    console.log("First star: " + acc);
+    console.log("Second star: " + acc);
     
 })()
